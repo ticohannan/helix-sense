@@ -1,0 +1,84 @@
+
+==============================================================================
+ BASELINE  uniform stretch of the free turns
+==============================================================================
+ 32 turns AWG 30 (bare 0.255 mm, OD 0.310 mm), D 5.0 mm, 2 bonded turns per end, close-wound 9.92 mm
+   x mm     L uH    f MHz  dL/dx %/mm  df/dx ppm/mm
+    0.0   2.0118   1.6341       -8.60        42,980
+    0.5   1.9291   1.6688       -8.20        40,992
+    1.0   1.8534   1.7025       -7.83        39,155
+    1.5   1.7837   1.7355       -7.49        37,460
+    2.0   1.7195   1.7676       -7.18        35,890
+    3.0   1.6050   1.8295       -6.61        33,073
+ f(x) departs from a straight line by 1.26 % of full scale (38 um) -- use a polynomial calibration, not a slope
+ spring: 185 N/m per turn, 29 free gaps -> 19.1 mN and 15.8 MPa shear at 3 mm
+
+==============================================================================
+ 1. WHICH GAPS MATTER  dL/d(gap) at x = 1.5 mm
+==============================================================================
+ centre gap: -0.1562 uH/mm      end gap: -0.0495 uH/mm      ratio 3.2x
+ first free gap: 48 % of centre;  quarter-point gap: 90 % of centre
+
+==============================================================================
+ 2. SAME LENGTH, DIFFERENT DISTRIBUTION  apparent displacement error
+==============================================================================
+
+ x = 0.5 mm   (uniform gap opening 17 um per gap)
+   linear gradient, +/-10 % end to end               -0.1 um  (  -0.0 % of x)
+   linear gradient, +/-30 % end to end               -0.5 um  (  -0.1 % of x)
+   linear gradient, +/-100 % end to end              -5.0 um  (  -1.0 % of x)
+   only the moving-end half opens                   -11.4 um  (  -2.3 % of x)
+   only the centre half opens                       +61.9 um  ( +12.4 % of x)
+   only the two end quarters open                   -92.2 um  ( -18.4 % of x)
+   one centre gap takes everything                   -4.0 um  (  -0.8 % of x)
+   random, 10 % rms per gap (400 trials)            -0.10 um mean, 1.85 um rms scatter
+   random, 30 % rms per gap (400 trials)            -0.55 um mean, 5.09 um rms scatter
+
+ x = 1.5 mm   (uniform gap opening 52 um per gap)
+   linear gradient, +/-10 % end to end               -0.4 um  (  -0.0 % of x)
+   linear gradient, +/-30 % end to end               -3.8 um  (  -0.3 % of x)
+   linear gradient, +/-100 % end to end             -43.0 um  (  -2.9 % of x)
+   only the moving-end half opens                  -115.9 um  (  -7.7 % of x)
+   only the centre half opens                      +108.2 um  (  +7.2 % of x)
+   only the two end quarters open                  -339.6 um  ( -22.6 % of x)
+   one centre gap takes everything                 -372.9 um  ( -24.9 % of x)
+   random, 10 % rms per gap (400 trials)            -0.70 um mean, 5.02 um rms scatter
+   random, 30 % rms per gap (400 trials)            -4.43 um mean, 14.93 um rms scatter
+
+ x = 3.0 mm   (uniform gap opening 103 um per gap)
+   linear gradient, +/-10 % end to end               -1.6 um  (  -0.1 % of x)
+   linear gradient, +/-30 % end to end              -14.4 um  (  -0.5 % of x)
+   linear gradient, +/-100 % end to end            -162.0 um  (  -5.4 % of x)
+   only the moving-end half opens                  -457.9 um  ( -15.3 % of x)
+   only the centre half opens                        +6.9 um  (  +0.2 % of x)
+   only the two end quarters open                  -861.3 um  ( -28.7 % of x)
+   one centre gap takes everything                -1491.2 um  ( -49.7 % of x)
+   random, 10 % rms per gap (400 trials)            -1.77 um mean, 9.23 um rms scatter
+   random, 30 % rms per gap (400 trials)           -12.29 um mean, 29.37 um rms scatter
+
+==============================================================================
+ 3. FRICTION IN THE GUIDE TUBE  extend 0 -> 3 mm -> 0, quasi-static
+==============================================================================
+ one turn weighs 70 uN; friction per turn = mu x normal load
+ uniform, mu*load = 0.1 turn weights (PTFE, horizontal)     max |error|   0.00 um   max up/down difference   0.00 um
+ uniform, mu*load = 0.3 turn weights (PP, horizontal)       max |error|   0.39 um   max up/down difference   0.42 um
+ uniform, mu*load = 3 turn weights (bowed / side-loaded)    max |error|  20.45 um   max up/down difference  24.28 um
+ PTFE + one turn snagged at the quarter point (2 mN)        max |error|  12.35 um   max up/down difference  22.17 um
+ PTFE + one turn snagged at the centre (2 mN)               max |error|   2.91 um   max up/down difference   3.12 um
+
+==============================================================================
+ 4. DELIBERATE SERIES SEGMENTS  sensitivity at x = 1.5 mm, full-scale stress
+==============================================================================
+ design                                               L0 uH  df/dx ppm/mm   F mN  tau MPa
+ 32 turns, 0 bonded turns per end                     2.012        36,167   17.9     14.8
+ 32 turns, 2 bonded turns per end                     2.012        37,460   19.1     15.8
+ 32 turns, 4 bonded turns per end                     2.012        38,811   22.2     18.3
+ 32 turns, 6 bonded turns per end                     2.012        38,914   26.4     21.8
+ 32 turns, 8 bonded turns per end                     2.012        37,937   32.6     27.0
+ 32 turns, 10 bonded turns per end                    2.012        35,854   42.7     35.3
+ 32 turns, 12 bonded turns per end                    2.012        32,462   61.7     51.0
+ 8+16+8 turns, ends 4 mm dia, centre 5 mm, 2 bonded   1.666        39,010   24.6     20.3
+ 14 gaps pre-opened to 2x pitch at the centre         1.505        27,392   19.1     15.8
+ 14 gaps pre-opened to 2x pitch at the ends           1.606        31,007   19.1     15.8
+
+figures written to docs/figures
