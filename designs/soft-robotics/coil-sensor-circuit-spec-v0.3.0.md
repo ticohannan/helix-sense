@@ -1,11 +1,12 @@
 # Stretch-Coil Displacement Sensor — Circuit Specification
 
-**Version:** 0.2.0
-**Date:** 2026-11-16
+**Version:** 0.3.0
+**Date:** 2026-11-23
 **Status:** Draft for review — not yet built or measured
-**Related files:** `coil-sensor-schematic-v0.1.0.svg` (unchanged at this version), `tools/coil_stretch_inductance_tool.py`, `docs/nonuniform-stretch.md`, `docs/field-deployment.md`
+**Related files:** `coil-sensor-schematic-v0.1.0.svg` (unchanged at this version), `tools/coil_stretch_inductance_tool.py`, `docs/nonuniform-stretch.md`, `docs/field-deployment.md`, `docs/tolerance-and-calibration.md`, `docs/nearby-metal.md`
 
-Numbers in §3 and §9 were recomputed with the filament model at this version; see the changelog for what moved.
+At this version: calibration (§8.1) and nearby-metal and unit-to-unit terms (§9) added;
+open item 2 replaced by modelled keep-out distances. Circuit and bill of materials unchanged.
 
 ---
 
@@ -187,6 +188,22 @@ from the undamped formula introduces a bias that changes with Q — and Q change
 stretch, so it is a stretch-dependent systematic, not a constant offset that calibrates
 away.
 
+### 8.1 Calibration
+
+Units are not interchangeable: on a shared curve they differ by 0.3 to 0.8 mm (*model*,
+`docs/tolerance-and-calibration.md`). Each sensor is calibrated installed, with nearby
+metal in place.
+
+- Fit displacement as a polynomial in f/f₀ − 1 (f₀ = rest frequency), or in the
+  sensor/reference ratio. Fitting in frequency needs one polynomial order less than
+  fitting in inductance.
+- Three known positions and a quadratic leave under 1 µm of fit error; four and a cubic
+  leave none. The position reference then sets the accuracy: ±2 µm of stage error
+  gives about ±5 µm.
+- Field fallback: rest plus one gauge block at full scale with the modelled curve
+  shape, good to about 7 µm.
+- C5's value does not need to be tight, since a tare removes it. Its stability does.
+
 ## 9. Error budget
 
 | Term | Magnitude | Comment |
@@ -196,6 +213,10 @@ away.
 | Coil diameter growth (copper, 17 ppm/°C) | +32 ppm/°C in L → −16 ppm/°C in f | ≈ 0.4 µm/°C; new at v0.2.0 |
 | Non-uniform stretch | ~20 µm hysteresis if a turn snags off-centre or the coil is side-loaded; < 0.5 µm for a free coil in a smooth tube | `docs/nonuniform-stretch.md` |
 | Stray capacitance | 0.35 pF of change reads as 1 µm | Fix the cable; see `docs/field-deployment.md` |
+| Unit-to-unit spread | ±2.2 % in f, ±3.8 % in sensitivity | Removed by per-unit calibration (§8.1) |
+| Calibration reference | ±2 µm stage → about ±5 µm | Sets the accuracy floor |
+| Metal alongside, non-magnetic | 6.6 µm per 0.1 mm of coil side-play at 5 mm; 0.8 µm at 10 mm | Fixed offset calibrates out; drift negligible |
+| Mild steel alongside | 0.11 µm/°C at 5 mm, 0.014 at 10 mm, plus stress dependence | `docs/nearby-metal.md`; estimate only |
 | Member CTE (steel, 12 ppm/°C) | ≈ 0.12 µm/°C | On a 10 mm span |
 | Member CTE (silicone, 250 ppm/°C) | ≈ 2.5 µm/°C | Avoid load-bearing elastomer |
 | Copper tempco via Q | < 1 ppm/°C | Negligible |
@@ -216,9 +237,10 @@ design in than to retrofit.
 ## 10. Open items
 
 1. **Member material and CTE** — pending from the mechanical designer. Drives §9.
-2. **Eddy-current coupling** — if metal sits within one to two coil diameters of the
-   winding it will shift both L and Q, temperature-dependently. Non-conductive
-   standoffs at the bond points are recommended.
+2. **Nearby metal** — now modelled. Keep 10 mm from the coil axis to metal alongside
+   and 7.5 mm beyond the ends; no metal inside the coil or as a guide tube; avoid mild
+   steel within 5 mm. The steel member chosen for low expansion is acceptable at that
+   distance. Not yet measured, and steel's permeability under stress is unquantified.
 3. **Friction hysteresis** — coil rubbing inside the guide tube will produce stick-slip
    in the L-vs-displacement curve. Needs measurement on a real assembly.
 4. **Proximity-effect factor** — currently a guess of 2.0 in the model, and it changes
@@ -231,12 +253,20 @@ design in than to retrofit.
    reference before committing to the discrete front end. See `docs/literature-review.md`.
 9. **Coil internal resonance near 90 Hz** (axial surge mode of the free turns). Keep the
    measurement bandwidth below it or confirm the guide tube damps it.
+10. **Benchmark against a Hall sensor and magnet** on the same stage. It is the cheap
+    rival for 1 to 3 mm on a rigid mount (`docs/sensor-selection.md`).
+11. **Capacitor tempco matching** between sensor and reference from one reel is assumed
+    at 5 ppm/°C. One oven run would measure it.
 
 ## 11. Verification plan
 
 1. Measure L on a wound coil at several fixed lengths with an LCR meter; compare to the
    filament model and fit the proximity factor.
 2. Capture the ring on a scope; confirm amplitude, Q, cycle count, and symmetry.
-3. Sweep displacement with a micrometer stage; extract the L(x) curve and check for
-   hysteresis on the return sweep.
+3. Sweep displacement with a micrometer stage; extract the f(x) curve, fit it as in
+   §8.1, and check for hysteresis on the return sweep.
 4. Soak at two temperatures to separate mechanical from electrical drift.
+5. Bring an aluminium plate and a steel plate up to the coil at fixed stretch and
+   compare the shift with `docs/nearby-metal.md`.
+6. Wind five coils and compare their curves with the spread in
+   `docs/tolerance-and-calibration.md`.

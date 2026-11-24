@@ -1,0 +1,65 @@
+
+==============================================================================
+ 1. UNIT-TO-UNIT SPREAD  (2000 simulated builds)
+==============================================================================
+ rest frequency             median 1.6508 MHz     95 % of units within 1.6145 .. 1.6875  (+/-2.2 %)
+ apparent L at rest         median 1.9714 uH      95 % of units within 1.8866 .. 2.0610  (+/-4.4 %)
+ span, f(3 mm)/f(0) - 1     median 11.65 %       95 % of units within 11.19 .. 12.15  (+/-4.1 %)
+ sensitivity at 1.5 mm      median 36,539 ppm/mm  95 % of units within 35,219 .. 38,014  (+/-3.8 %)
+ 1 um = 36.5 ppm of frequency at mid-range
+
+==============================================================================
+ 2. WHICH TOLERANCE IS RESPONSIBLE  (one varied at a time, 400 builds each)
+==============================================================================
+ tolerance (1 sigma)             shared curve  1-point tare    2-point   um, 95th pct
+ coil diameter, 1 %                     537.5           9.7       0.36
+ wire OD, 1.5 %                         269.0          76.7       0.78
+ turns not touching, 10 um              293.7          84.4       0.82
+ bonded turns, +/-1 per end             119.3         119.3       7.54
+ tank capacitor, 0.5 %                  144.8           0.0       0.00
+ stray capacitance, 5 pF                 30.9           0.0       0.00
+
+==============================================================================
+ 3. HOW MUCH CALIBRATION DOES A UNIT NEED  (worst error over 0-3 mm, um)
+==============================================================================
+ method                                            median unit  95th pct unit
+ shared nominal curve, no per-unit data                  300.6          766.4
+ 1 point: tare at rest, nominal shape                     84.4          189.5
+ 2 points: rest and full scale, nominal shape              3.0            6.9
+ polynomial order 1, 2 points, in 1-(f0/f)^2           179.433        190.243
+ polynomial order 1, 2 points, in f/f0-1                55.801         62.756
+ polynomial order 2, 3 points, in 1-(f0/f)^2             9.668         10.958
+ polynomial order 2, 3 points, in f/f0-1                 0.564          0.787
+ polynomial order 3, 4 points, in 1-(f0/f)^2             0.703          0.852
+ polynomial order 3, 4 points, in f/f0-1                 0.014          0.020
+ polynomial order 3, 7 points, in 1-(f0/f)^2             0.452          0.540
+ polynomial order 3, 7 points, in f/f0-1                 0.010          0.015
+ polynomial order 4, 5 points, in 1-(f0/f)^2             0.058          0.075
+ polynomial order 4, 5 points, in f/f0-1                 0.000          0.000
+ polynomial order 4, 9 points, in 1-(f0/f)^2             0.031          0.039
+ polynomial order 4, 9 points, in f/f0-1                 0.000          0.000
+ polynomial order 5, 11 points, in 1-(f0/f)^2            0.002          0.003
+ polynomial order 5, 11 points, in f/f0-1                0.000          0.000
+
+ effect of a +/-2 um (1 sigma) error in the stage positions used for calibration
+   order 3,  4 points: worst error  5.47 um (95th pct), rms over range 1.97 um
+   order 3,  7 points: worst error  4.60 um (95th pct), rms over range 1.43 um
+   order 3, 13 points: worst error  3.83 um (95th pct), rms over range 1.10 um
+   order 4,  9 points: worst error  4.61 um (95th pct), rms over range 1.42 um
+   order 4, 25 points: worst error  3.79 um (95th pct), rms over range 0.90 um
+
+==============================================================================
+ 4. WHAT A REFERENCE COIL LEAVES UNCANCELLED
+==============================================================================
+ residual drift of the sensor/reference frequency ratio, as displacement
+   source                                                      ppm/degC   um/degC
+   coil growth, sensor at 0.0 mm vs reference at rest              0.00     0.000
+   coil growth, sensor at 1.5 mm vs reference at rest              0.17     0.005
+   coil growth, sensor at 3.0 mm vs reference at rest              0.28     0.008
+   capacitor tempco mismatch, same reel (assumed 5 ppm/degC)       2.50     0.068
+   capacitor tempco mismatch, different lots (up to 30)           15.00     0.411
+
+ if sensor and reference sit at different temperatures, the uncancelled part is 31 ppm = 0.84 um per degC of difference
+ microcontroller clock error cancels exactly in the ratio
+
+figures written to docs/figures

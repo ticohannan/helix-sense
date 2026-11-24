@@ -17,7 +17,12 @@ LVDT or a precision potentiometer would cost too much or wear out.
 | `tools/coil_stretch_inductance_tool.py` | Interactive design explorer. Paste into one Jupyter cell. Wire gauge, turns, diameter, stretch, tank capacitor, readout timing, temperature budget, spring stress. |
 | `tools/helix_core.py` | The same physics as an importable module, for scripts. |
 | `tools/nonuniform_stretch.py` | What happens when the coil does not stretch evenly: gap influence, friction hysteresis, series-segment designs. |
+| `tools/tolerance_mc.py` | Monte Carlo over build tolerances: how alike two units are, and how many calibration points each needs. |
+| `tools/nearby_metal.py` | Effect of metal plates, tubes and fasteners near the coil; keep-out distances. |
 | `tools/check_consistency.py` | Confirms the notebook cell and `helix_core` agree. |
+| `docs/sensor-selection.md` | When a stretched coil is the right sensor, and when a potentiometer, string pot, LVDT or Hall sensor is better. |
+| `docs/tolerance-and-calibration.md` | Findings from the tolerance analysis, and a calibration recipe. |
+| `docs/nearby-metal.md` | Findings from the nearby-metal model. |
 | `docs/nonuniform-stretch.md` | Findings from the uneven-stretch analysis. |
 | `docs/literature-review.md` | Published coil and spring sensors, readout methods compared by cost, and what nobody has measured yet. |
 | `docs/field-deployment.md` | Temperature, humidity, condensation, interference and cabling, sized for the reference design. |
@@ -30,6 +35,8 @@ LVDT or a precision potentiometer would cost too much or wear out.
 pip install numpy scipy matplotlib pandas ipywidgets
 python tools/check_consistency.py
 python tools/nonuniform_stretch.py
+python tools/tolerance_mc.py
+python tools/nearby_metal.py
 ```
 
 For the interactive explorer, open Jupyter and paste the contents of
@@ -57,6 +64,11 @@ For the interactive explorer, open Jupyter and paste the contents of
   second, fixed coil measured as a ratio cancels both.
 - An off-the-shelf inductance-to-digital converter has already been shown reading a
   spring. Buy one as a baseline.
+- Units are not interchangeable: each needs its own curve. Three known positions and a
+  quadratic in frequency reach a micron; after that the calibration stage is the limit.
+- Keep metal two coil diameters away, and avoid mild steel. Calibrate in place.
+- The method suits soft, light, force-sensitive things. For a rigid mechanism, try a
+  Hall sensor and magnet first.
 
 ## Roadmap
 
@@ -64,7 +76,9 @@ For the interactive explorer, open Jupyter and paste the contents of
 - Firmware for ring-down timing on an RP2040.
 - A continuous-oscillator-and-counter variant that runs on a classic Arduino.
 - Side-by-side comparison with an LDC1612 module.
-- Reference-channel ratio and polynomial calibration tool.
+- Calibration tool that fits measured stage data (the recipe is in `docs/tolerance-and-calibration.md`).
+- Hall-sensor benchmark on the same stage.
+- Finite-element check (FEMM) for steel and ferrite parts.
 - Oven and humidity tests.
 
 ## License

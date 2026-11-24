@@ -12,13 +12,75 @@ design decisions. A change to one usually requires a matching change to the othe
 | File | Purpose |
 |---|---|
 | `tools/coil_stretch_inductance_tool.py` | Jupyter modelling cell |
-| `tools/helix_core.py`, `tools/nonuniform_stretch.py` | Importable physics core and analysis scripts |
+| `tools/helix_core.py`, `tools/nonuniform_stretch.py`, `tools/tolerance_mc.py`, `tools/nearby_metal.py` | Importable physics core and analysis scripts |
 | `docs/*.md` | Findings, literature review, field-deployment notes |
 | `designs/<name>/coil-sensor-schematic-v<version>.svg` | Circuit schematic |
 | `designs/<name>/coil-sensor-circuit-spec-v<version>.md` | Design constraints, BOM, rationale |
 | `designs/<name>/coil-sensor-handoff-v<version>.md` | Mechanical interface handoff |
 
 ---
+
+## [0.3.0] — 2026-11-23
+
+Three questions answered by model: how alike are two builds, what does nearby metal do,
+and when is a stretched coil the wrong sensor.
+
+### Added
+
+- `tools/tolerance_mc.py` and `docs/tolerance-and-calibration.md`: Monte Carlo over
+  2,000 simulated builds (diameter, wire build, loose winding, bond length, capacitor);
+  calibration methods compared; what a reference coil leaves uncancelled; a calibration
+  recipe.
+- `tools/nearby_metal.py` and `docs/nearby-metal.md`: complex-image model for thick
+  plates and shorted-ring model for tubes, rods and washers, cross-checked against each
+  other to 3 %; offsets, movement sensitivity, temperature drift, Q loss, keep-out
+  distances.
+- `docs/sensor-selection.md`: the stretched coil against slide and precision
+  potentiometers, string pots, LVDTs, Hall sensors and printed-coil sensing, with
+  sourced figures, rule-out conditions and a decision sequence.
+- `tools/plotstyle.py`: shared figure style for the analysis scripts.
+- Spec §8.1 (calibration), four error-budget rows, open items 10 and 11, verification
+  steps 5 and 6.
+- Handoff §5.7 (access for calibration after installation) and request 9.
+
+### Changed
+
+- **Metal keep-out is now a modelled figure and is larger.** 10 mm from the coil axis
+  to metal alongside and 7.5 mm beyond the ends, replacing "one to two coil diameters
+  (5 to 10 mm)". Handoff §5.4 rewritten; spec open item 2 replaced.
+- **Calibration is per unit and in place.** Previously implied; now a stated
+  requirement in both design documents.
+- Spec and handoff reissued as v0.3.0. Circuit, bill of materials and schematic
+  unchanged.
+- README: new tools and documents listed; roadmap gains a Hall-sensor benchmark and a
+  finite-element check.
+
+### Notes recorded for future reference
+
+- Units built to one recipe differ by ±2.2 % in frequency and ±3.8 % in sensitivity;
+  on a shared curve that is 0.3 to 0.8 mm.
+- A tare at rest removes capacitor and stray-capacitance error entirely, so the tank
+  capacitor's tolerance does not matter; only its stability does.
+- Displacement is close to a quadratic in frequency. Fitting in a variable
+  proportional to inductance needs one more polynomial order.
+- With per-unit calibration the position reference is the accuracy floor: ±2 µm of
+  stage error gives about ±5 µm.
+- The reference coil need not be stretched like the sensor; it needs a capacitor from
+  the same reel and the same temperature (0.84 µm per °C of difference).
+- Fixed metal shifts the calibration but not the repeatability. Relative movement
+  between coil and metal is what costs accuracy.
+- Non-magnetic metals add almost no temperature drift. Mild steel adds about
+  0.1 µm/°C at 5 mm, and its permeability depends on stress.
+- A closed metal tube needs an inner diameter of four coil diameters before its cost
+  is small. A metal screw 3 mm inside the coil costs a fifth of the sensitivity.
+- For a rigid mount and 1 to 3 mm, a Hall sensor and magnet is the rival to benchmark.
+
+### Open at this version
+
+Everything open at 0.2.0, plus: assumed build tolerances not yet measured on real
+coils; steel permeability at 1.7 MHz and its stress dependence unquantified; steel
+tubes, steel screws and ferrite not modelled; Hall-sensor benchmark not done; no
+distributor prices collected for the alternatives.
 
 ## [0.2.0] — 2026-11-16
 
@@ -148,5 +210,6 @@ the guide tube; proximity-effect factor (currently a guess of 2.0); LT1016 commo
 window on a single 5 V supply; enamel abrasion over cycles; whether coil diameter stays
 constant under extension.
 
+[0.3.0]: #030--2026-11-23
 [0.2.0]: #020--2026-11-16
 [0.1.0]: #010--2026-09-09

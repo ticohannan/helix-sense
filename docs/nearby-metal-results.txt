@@ -1,0 +1,115 @@
+
+==============================================================================
+ 0. MODEL CHECKS
+==============================================================================
+ Neumann integral vs Maxwell formula, coaxial loops: worst difference 0.007 %
+ ring frequency 1.735 MHz; skin depth: aluminium 6061 76 um, brass 97 um, stainless 304 324 um, mild steel 15 um
+ end plate, aluminium: image model vs ring model
+   gap  2.0 mm: dL/L image -2.305 %, rings -2.330 %   added R image 9.91 mohm, rings 9.95 mohm
+   gap  5.0 mm: dL/L image -0.617 %, rings -0.618 %   added R image 1.57 mohm, rings 1.59 mohm
+   gap 10.0 mm: dL/L image -0.165 %, rings -0.160 %   added R image 0.26 mohm, rings 0.28 mohm
+
+==============================================================================
+ 1. SIDE PLATE  coil alongside a thick metal surface (distance = coil axis to surface)
+==============================================================================
+ coil radius 2.5 mm, so 3 mm means 0.5 mm of clearance; Q with no metal = 37
+ metal                  dist mm   dL/L %  offset um  um per 0.1 mm   um/degC      Q
+ aluminium 6061             3.0   -3.231      431.8         -25.10    -0.020   34.8
+ aluminium 6061             5.0   -1.191      159.2          -6.60    -0.005   36.3
+ aluminium 6061             7.5   -0.470       62.8          -2.01    -0.002   36.7
+ aluminium 6061            10.0   -0.225       30.1          -0.78    -0.001   36.9
+ aluminium 6061            15.0   -0.074        9.9          -0.18    -0.000   37.0
+ aluminium 6061            20.0   -0.033        4.4          -0.06    -0.000   37.0
+ brass                      3.0   -3.211      429.1         -24.87    -0.010   34.6
+ brass                      5.0   -1.186      158.5          -6.56    -0.003   36.2
+ brass                      7.5   -0.468       62.6          -2.00    -0.001   36.7
+ brass                     10.0   -0.225       30.1          -0.78    -0.000   36.9
+ brass                     15.0   -0.074        9.9          -0.18    -0.000   37.0
+ brass                     20.0   -0.033        4.4          -0.06    -0.000   37.0
+ stainless 304              3.0   -2.982      398.6         -22.28    -0.021   32.5
+ stainless 304              5.0   -1.127      150.7          -6.15    -0.006   35.6
+ stainless 304              7.5   -0.451       60.2          -1.91    -0.002   36.5
+ stainless 304             10.0   -0.218       29.1          -0.75    -0.001   36.8
+ stainless 304             15.0   -0.073        9.7          -0.18    -0.000   36.9
+ stainless 304             20.0   -0.032        4.3          -0.06    -0.000   37.0
+ mild steel, mu_r 100       3.0   -1.945      259.9         -11.90    -0.362   28.0
+ mild steel, mu_r 100       5.0   -0.836      111.8          -4.13    -0.112   33.5
+ mild steel, mu_r 100       7.5   -0.360       48.2          -1.42    -0.036   35.7
+ mild steel, mu_r 100      10.0   -0.183       24.4          -0.59    -0.014   36.5
+ mild steel, mu_r 100      15.0   -0.064        8.6          -0.15    -0.003   36.9
+ mild steel, mu_r 100      20.0   -0.029        3.9          -0.05    -0.001   36.9
+
+==============================================================================
+ 2. END PLATE  thick metal facing the fixed end (distance = last turn to surface)
+==============================================================================
+ metal                  dist mm   dL/L %  offset um  um per 0.1 mm   um/degC      Q
+ aluminium 6061             1.0   -4.448      594.4         -42.39    -0.034   33.8
+ aluminium 6061             2.0   -2.305      308.0         -17.12    -0.014   35.5
+ aluminium 6061             3.0   -1.370      183.1          -8.31    -0.006   36.2
+ aluminium 6061             5.0   -0.617       82.5          -2.76    -0.002   36.7
+ aluminium 6061             7.5   -0.295       39.4          -1.00    -0.001   36.9
+ aluminium 6061            10.0   -0.165       22.1          -0.45    -0.000   36.9
+ brass                      1.0   -4.412      589.7         -41.93    -0.017   33.4
+ brass                      2.0   -2.291      306.1         -16.97    -0.007   35.3
+ brass                      3.0   -1.363      182.2          -8.26    -0.003   36.1
+ brass                      5.0   -0.615       82.2          -2.74    -0.001   36.6
+ brass                      7.5   -0.294       39.3          -1.00    -0.000   36.8
+ brass                     10.0   -0.165       22.0          -0.45    -0.000   36.9
+ stainless 304              1.0   -4.022      537.6         -36.80    -0.036   30.2
+ stainless 304              2.0   -2.136      285.4         -15.37    -0.015   33.8
+ stainless 304              3.0   -1.289      172.2          -7.63    -0.007   35.3
+ stainless 304              5.0   -0.591       79.0          -2.59    -0.002   36.3
+ stainless 304              7.5   -0.285       38.1          -0.96    -0.001   36.7
+ stainless 304             10.0   -0.161       21.5          -0.44    -0.000   36.9
+ mild steel, mu_r 100       1.0   -2.321      310.2         -16.18    -0.554   25.2
+ mild steel, mu_r 100       2.0   -1.414      189.0          -8.33    -0.255   30.2
+ mild steel, mu_r 100       3.0   -0.929      124.1          -4.71    -0.133   33.0
+ mild steel, mu_r 100       5.0   -0.468       62.6          -1.86    -0.048   35.3
+ mild steel, mu_r 100       7.5   -0.240       32.1          -0.75    -0.018   36.3
+ mild steel, mu_r 100      10.0   -0.140       18.7          -0.36    -0.008   36.7
+
+==============================================================================
+ 2b. MILD STEEL: HOW MUCH DEPENDS ON ITS PERMEABILITY  side plate, mid-range
+==============================================================================
+ permeability of steel at MHz is poorly known and changes with stress and temperature
+   mu_r  dist mm  offset um   um per 1 % change in mu_r      Q
+     50      5.0      125.5                      -0.171   34.0
+    100      5.0      111.8                      -0.226   33.5
+    200      5.0       94.0                      -0.283   33.0
+     50     10.0       26.1                      -0.021   36.6
+    100     10.0       24.4                      -0.029   36.5
+    200     10.0       22.1                      -0.038   36.3
+
+==============================================================================
+ 3. COAXIAL METAL  shorted-ring model, non-magnetic metals
+==============================================================================
+ case                                                   dL/L %  sens. change %   um/degC      Q
+ aluminium tube, inner diameter 8 mm, full length       -33.41           -27.7    -0.159   19.2
+ aluminium tube, inner diameter 10 mm, full length      -19.31           -13.7    -0.075   26.3
+ aluminium tube, inner diameter 15 mm, full length       -6.78            -3.2    -0.019   33.4
+ aluminium tube, inner diameter 20 mm, full length       -3.10            -1.0    -0.007   35.4
+ aluminium tube, inner diameter 30 mm, full length       -0.98            -0.2    -0.001   36.5
+ stainless 304 tube, inner diameter 10 mm, 0.5 mm wall   -18.28           -12.7    -0.094   19.9
+ brass M3 screw on axis, tip 1 mm beyond the fixed end    -0.51            -0.9    -0.007   35.9
+ brass M3 screw on axis, tip 3 mm beyond the fixed end    -0.09            -0.2    -0.001   36.8
+ brass M3 screw on axis, tip 6 mm beyond the fixed end    -0.01            -0.0    -0.000   37.0
+ brass M3 screw on axis, 3 mm inside the fixed end       -9.62           -20.9    -0.085   25.2
+ brass washer (3.2/7 mm), 1 mm beyond the fixed end      -2.65            -4.6    -0.022   33.2
+ brass washer (3.2/7 mm), 3 mm beyond the fixed end      -0.39            -0.7    -0.004   36.3
+
+==============================================================================
+ 4. KEEP-OUT DISTANCES  from the tables above, mid-range
+==============================================================================
+                           drift < 0.1 um/degC    < 1 um per 0.1 mm shift    Q loss < 10 %
+ side plate
+   aluminium 6061                       3.0 mm                    10.0 mm           3.0 mm
+   brass                                3.0 mm                    10.0 mm           3.0 mm
+   stainless 304                        3.0 mm                    10.0 mm           5.0 mm
+   mild steel, mu_r 100                 7.5 mm                    10.0 mm           5.0 mm
+ end plate
+   aluminium 6061                       1.0 mm                     7.5 mm           1.0 mm
+   brass                                1.0 mm                     7.5 mm           1.0 mm
+   stainless 304                        1.0 mm                     7.5 mm           2.0 mm
+   mild steel, mu_r 100                 5.0 mm                     7.5 mm           5.0 mm
+
+figures written to docs/figures

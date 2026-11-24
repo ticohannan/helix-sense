@@ -1,9 +1,12 @@
 # Stretch-Coil Displacement Sensor — Mechanical Handoff
 
-**Version:** 0.2.0
-**Date:** 2026-11-16
+**Version:** 0.3.0
+**Date:** 2026-11-23
 **For:** Mechanical / controls engineering
-**Accompanying files:** `coil-sensor-schematic-v0.1.0.svg`, `coil-sensor-circuit-spec-v0.2.0.md`, `tools/coil_stretch_inductance_tool.py`
+**Accompanying files:** `coil-sensor-schematic-v0.1.0.svg`, `coil-sensor-circuit-spec-v0.3.0.md`, `tools/coil_stretch_inductance_tool.py`
+
+**Changed since v0.2.0:** the metal keep-out distance is now a modelled figure and is
+larger (§5.4), and each sensor must be calibrated after it is installed (§5.7).
 
 **Changed since v0.1.0:** force and stress figures corrected upward (§4.1), sensitivity
 figures recomputed (§2, §3), and a new requirement on how evenly the coil stretches (§5.6).
@@ -168,10 +171,24 @@ end. **Please tell us how long the bond joints will actually be**, in turns or i
 millimetres.
 
 ### 5.4 Keep conductors away
-No metal within one to two coil diameters (so, 5–10 mm) of the winding, including
-fasteners, brackets, and the anchoring hardware itself. Non-conductive standoffs between
-the bond points and any metal structure. Metal in the field acts as a shorted turn: it
-shifts the reading, reduces signal quality, and does so temperature-dependently.
+Metal in the coil's field acts as a shorted turn: it lowers the inductance and shifts
+the reading. We have now modelled how much (`docs/nearby-metal.md`), and the rule is:
+
+- **10 mm from the coil's centreline to any metal surface running alongside it.**
+- **7.5 mm from the last turn to any metal beyond the ends**, anchors included.
+  Non-conductive standoffs between the bond points and any metal structure.
+- **No metal screw, pin or rod entering the coil**, and no metal guide tube.
+- **Prefer aluminium, brass or 300-series stainless to mild steel** for anything that
+  has to be close. Mild steel is magnetic, and its effect on the coil drifts with
+  temperature and with the stress in the steel.
+
+Why these distances: fixed metal only shifts the calibration, which §5.7 takes care of.
+The problem is the coil moving relative to the metal. With an aluminium surface 5 mm
+from the centreline, a 0.1 mm sideways shift of the coil in its tube reads as about
+7 µm. At 10 mm it reads as under 1 µm.
+
+If 10 mm cannot be had, tell us what metal and how close. Closer is workable with a
+non-magnetic metal and a snug guide; it is a problem with mild steel under 5 mm.
 
 ### 5.5 Constant coil diameter
 Our model assumes the coil diameter does not change as it stretches. For a free helix this
@@ -197,6 +214,14 @@ What the model says about this design (details in `docs/nonuniform-stretch.md`):
 So the requirement is a smooth bore, no adhesive wicking past the bonded turns, and no
 side load. A fixed unevenness (the coil wound slightly irregularly) is harmless because
 it is the same every cycle and calibrates out.
+
+### 5.7 Access for calibration after installation
+Two coils wound to the same recipe differ by several percent, and anything metallic
+nearby shifts the reading again, so each sensor is calibrated in its final position.
+We need a way to set the moving member to at least three known positions across the
+stroke with the sensor installed: a micrometer head, gauge blocks or shims against a
+hard stop. The calibration is only as good as those positions, so a reference good to
+a few microns gives a sensor good to a few microns.
 
 ## 6. The material choice that matters most
 
@@ -230,8 +255,8 @@ electrical drift and — if the reference shares the same structure and thermal 
 
 1. **Member material and CTE.** Highest priority (§6).
 2. **Bond joint length**, in turns or millimetres, at each end (§5.3).
-3. **Confirmation that no metal sits within 5–10 mm of the winding**, and how the anchors
-   attach (§5.4).
+3. **What metal sits within 10 mm of the coil's centreline or 7.5 mm of its ends**, what
+   it is made of, and how the anchors attach (§5.4).
 4. **Tube bore and material**, and expected radial clearance to the coil (§5.2).
 5. **Confirmation that nothing radially constrains the coil** (§5.5).
 6. **Duty cycle** — how many extension cycles over life, and whether it holds static
@@ -241,6 +266,8 @@ electrical drift and — if the reference shares the same structure and thermal 
 8. **Orientation and vibration environment** — a floppy coil in a vibrating assembly may
    need more support than a guide tube provides. The free turns have an internal axial
    resonance near 90 Hz; vibration around that frequency will show up in the reading.
+9. **How the member can be set to known positions for calibration** once the sensor is
+   installed (§5.7).
 
 ## 8. Assumptions you should feel free to challenge
 
